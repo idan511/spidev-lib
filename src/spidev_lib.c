@@ -100,13 +100,13 @@ int spi_read(int fd, uint8_t *rx_buffer, uint8_t rx_len){
 }
 
 int spi_write(int fd, uint8_t *tx_buffer, uint8_t tx_len){
-    struct spi_ioc_transfer spi_message[1];
-    memset(spi_message, 0, sizeof(spi_message));
+    struct spi_ioc_transfer spi_message;
+    memset(&spi_message, 0, sizeof(spi_message));
     
-    spi_message[0].tx_buf = (unsigned long)tx_buffer;
-    spi_message[0].len = tx_len;
+    spi_message.tx_buf = (unsigned long)tx_buffer;
+    spi_message.len = tx_len;
     
-    return ioctl(fd, SPI_IOC_MESSAGE(1), spi_message);
+    return ioctl(fd, SPI_IOC_MESSAGE(1), &spi_message);
 }
 
 
